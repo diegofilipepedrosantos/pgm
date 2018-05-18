@@ -1,5 +1,5 @@
-# CodeIgniter 2
-Open Source PHP Framework (originally from EllisLab)
+# PGM
+Open Source PHP 
 
 For more info, please refer to the user-guide at http://www.codeigniter.com/userguide2/  
 (also available within the download package for offline use)
