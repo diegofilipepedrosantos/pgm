@@ -1,0 +1,74 @@
+<script src="http://localhost:8080/timer/jquery.js"></script>
+<script>
+var format = function(seconds) {
+    var tempos = {
+        segundos: 60
+    ,   minutos: 60
+    ,   horas: 24
+    ,   dias: ''
+    };
+    var parts = [], string = '', resto, dias;
+    for (var unid in tempos) {
+        if (typeof tempos[unid] === 'number') {
+            resto = seconds % tempos[unid];
+            seconds = (seconds - resto) / tempos[unid];
+        } else {
+            resto = seconds;
+        }
+        parts.unshift(resto);
+    }
+    dias = parts.shift();
+    if (dias) {
+        string = dias + (dias > 1 ? ' dias ' : ' dia ');
+    }
+    for (var i = 0; i < 3; i++) {
+        parts[i] = ('0' + parts[i]).substr(-2);
+    }
+    string += parts.join(':');
+    return string;
+};
+$(function(){
+    var tempo = 0;
+    var interval = 0;
+	console.log("entrou");
+    var timer = function(){
+        $('.timer').html(format(++tempo));
+    };
+    $.post('../timer/get_timer.php', function(resp){
+        $('button').text(resp.running ? 'Pausar' : 'Iniciar');
+        tempo = resp.seconds;
+        timer();
+        if (resp.running) {
+            interval = setInterval(timer, 1000);
+        }
+    });
+    $('button').on('click', function(){
+        var btn = this;
+		console.log(btn);
+        btn.disabled = true;
+        $.post('../timer/grava_acao.php', function(resp){
+			console.log(resp);
+            btn.disabled = false;
+            $(btn).text(resp.running ? 'Pausar' : 'Iniciar');
+            if (resp.running) {
+                timer();
+                interval = setInterval(timer, 1000);
+            } else {
+                clearInterval(interval);
+            }
+        });
+    });
+});
+</script>
+<?php 
+session_start();
+	if(!isset($_SESSION['id'])){ 
+		echo "entrou";
+		echo $this->session->userdata('id');
+		//print $_SESSION['id'];
+		//$_SESSION['id'] = $this->session->userdata('id'); 
+	}
+
+?>
+<div class="timer">0 segundos</div>
+<button id="playstop" value="Iniciar"></button>

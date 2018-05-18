@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PGM - Perfil</title>
+
+<link href="<?= base_url();?>/css/style.css" rel="stylesheet" type="text/css" />
+
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
+.grid-item {
+  --background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  text-align: center;
+}
+</style>
+<script src="http://localhost:8080/timer/jquery.js"></script>
+
+</head>
+<body>
+
+	<div id="container">
+		<?php include 'menu.php';?>
+		<center>
+			<h1>Perfil</h1>
+		</center>
+		<div id="body" class="grid-container">
+			<div style="float:left; margin-right:20%;" class="grid-item">
+				<img width="160" src="<?=base_url()?>avatar_image/<?=$this->session->userdata('avatar')?>">
+				<div style="display: inline-block; margin-left: 20px;">
+					<?php echo 'Nome : '.$this->session->userdata('username')."<br>";
+				echo 'Horas por dia : '.$this->session->userdata('horas')." hrs"; ?>
+
+
+					<?php echo form_open('desvio/index'); ?>
+					<?php echo form_label('Algum Desvio?'); ?>
+					<?php echo form_submit(array('id' => 'submit', 'value' => 'Registrar')); ?>
+					<?php echo form_close(); ?>
+				</div>
+			</div>
+			<div style="float:left; margin-right:20%;" class="grid-item">
+			<h2>Desvio(s)</h2>
+			<?php echo $this->load->library('table');
+			  	  echo $this->table->generate($tabledesvio);?>	
+		</div>	
+		<div class="grid-item">
+			<h2>Tarefas em Andamento</h2>
+			<p>Em desenvolvimento atribuida para usuario</p>
+			<?php echo form_open('tarefa/detalhes'); ?>
+			<?php if(isset($tarefas)){ foreach ($tarefas as $key => $item):?>
+		
+			<figure id="containerimage">
+				<input type="image"  src="<?=base_url(); ?>postit.jpeg" id="centro" name="tarefa" value="<?= $key ?>" ><figcaption><?php echo "#".$key."<br>".$item;?></figcaption>
+				<!--  <div class="timer">0 segundos</div><button id="playstop" value="Iniciar" name="<?= $key ?>"></button>	-->	
+				<?php include "./../../timer/timer.php"; ?>
+											
+			</figure>
+		</div>		
+			<?php endforeach; }?>
+			<?php echo form_close(); ?>
+
+		</div>
+		<p class="footer">
+			PGM renderizado em <strong>{elapsed_time}</strong> segundos
+		</p>
+	</div>
+
+</body>
+</html>
+
