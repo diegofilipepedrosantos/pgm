@@ -1,9 +1,8 @@
 # PGM
-Open Source PHP 
+Ferramenta pra Gerenciamento de pequenas equipes de desenvolvimento Open Source PHP 
 
-For more info, please refer to the user-guide at http://www.codeigniter.com/userguide2/  
-(also available within the download package for offline use)
+Está ferramenta foi desenvolvida com o framework Codeigniter 2.3.6
 
-**WARNING:** *CodeIgniter 2.x is no longer under development and only receives security patches until October 31st, 2015.
-Please update your installation to the latest CodeIgniter 3.x version available
-(upgrade instructions [here](http://www.codeigniter.com/userguide3/installation/upgrade_300.html)).*
+O PGM é uma ferramenta criada para gerenciamento de atividades de pequenas equipes de desenvolvimento utilizando metodos ageis para axulio do gerencimaneto das mesmas.
+
+Criado por Diego Filipe PEdro Santos
